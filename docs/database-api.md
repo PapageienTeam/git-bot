@@ -16,11 +16,8 @@ await db.user.add({
 ```js
 await db.issue.add({
 	// Properties of entity: 'Issue'
-});
-```
 
-```js
-await db.issue.addRel({
-	// Properties of entity: 'user_issue_rel'
+	assignee: <str> / null,
+	creator: <str> / null
 });
 ```
