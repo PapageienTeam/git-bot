@@ -29,5 +29,7 @@
   },
   "dependencies": {
     "@slack/client": "^3.14.0"
+    "@slack/client": "^3.14.0",
+    "bluebird": "^3.5.0"
   }
 }
