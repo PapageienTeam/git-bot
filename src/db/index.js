@@ -20,6 +20,7 @@ const validateEnum = (val, name, max) => {
 
 const db = module.exports = {
 	rel_types: ['assigned', 'created', 'mentioned', 'subscribed'],
+	issue_status_types: ['open', 'closed'],
 
 	clearAll: async() => {
 		await pool.query('DELETE FROM "User"');
@@ -63,6 +64,27 @@ const db = module.exports = {
 			}
 			await addRel(assignee, 'assigned');
 			await addRel(creator, 'created');
+		},
+
+		listBySlackUserID: async(user_slack_id, filter = null) => {
+			validateString(user_slack_id, 'user_slack_id');
+			let userRes = await pool.query('SELECT github_id FROM "User" WHERE slack_id = $1', [user_slack_id]);
+			if (userRes.rows.length > 0) {
+				let user_github_id = res.rows[0][0];
+				let res = await pool.query('SELECT status, title, url FROM "Issue" WHERE github_id = $1', [user_github_id]);
+				let issues = [];
+				for(let row of res.rows) {
+					if (row[2] === 0 /* open */) {
+						issues.push({
+							title: row[1],
+							url: row[2]
+						});
+					}
+				}
+				return issues;
+			} else {
+				console.warn(`No user entry found for slack_id = ${user_slack_id}`);
+			}
 		}
 	}
 };
