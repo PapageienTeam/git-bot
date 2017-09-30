@@ -1,7 +1,7 @@
 
-## User(id, github_id, slack_id)
+## User(id, github_login, slack_id)
  + id: `<int>`
- + github_id: `<int>`
+ + github_login: `<string>`
  + slack_id: `<string>`
 
 ## Issue(github_id, status, title, url)
