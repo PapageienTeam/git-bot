@@ -28,12 +28,12 @@ function wantsLifesign(message){
 /**
 * Returns wanted reation in form of an integer
 * 0 = no reaction
-* 1 = display Issues, "wanted message"
-* 2 = Ping-Command
-* 3 = display Issues, "friendly suggestion"
+* 1 = display Issues, "wanted message" sendMessage (<@MEMBERID>+ "bla") | Array: db.issue.listbySlackUserID(MEMBERID) => String
+* 2 = Ping-Command  sendMessage (<@here> + "Hi leute") 
+* 3 = display Issues, "friendly suggestion" sendMessage (<@MEMBERID>+ "bla") | Array: db.issue.listbySlackUserID(MEMBERID) => String
 **/
 function reaction(message){
-    if(wantsIssues(message)) return 1;
+    if(wantsIssues(message)) return 1; 
     else if(wantsLifesign(message)) return 2;
     else if (isBored(message)) return 3;
     else return -1;
