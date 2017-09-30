@@ -6,6 +6,7 @@ var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 var bot_token = process.env.SLACK_BOT_TOKEN;
 var rtm = new RtmClient(bot_token);
+var events = require('events');
 
 var channel = 0;
 
@@ -20,9 +21,11 @@ var connect = function (connecting_channel){
       console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
    });
    // you need to wait for the client to fully connect before you can send messages
-   var promise = new Promise(function(resolve){
-      rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+   console.log("This: ", this);
+   var promise = new Promise((resolve) => {
+      rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
          console.log("Connected");
+         startListen(this);
          resolve();
       });
    });
@@ -31,13 +34,17 @@ var connect = function (connecting_channel){
 };
 
 var send = function(message){
+   console.log("Send");
    rtm.sendMessage(message, channel);
 };
 
-var receive = function(){
-   return new Promise( function( resolve ){
-      rtm.on(RTM_EVENTS.MESSAGE, resolve);
+var startListen = function(context){
+   rtm.on(RTM_EVENTS.MESSAGE, (message) => {
+      console.log("startlisten");
+      context.emit('receive', message);
    });
-}
+};
 
-module.exports = {connect: connect, send: send, receive: receive}
+var commands = {connect: connect, send: send};
+Object.setPrototypeOf(commands, new events.EventEmitter);
+module.exports = commands;
