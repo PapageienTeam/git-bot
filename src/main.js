@@ -18,6 +18,7 @@ if (require.main===module){
   main();
 } else {
   module.exports ={
-
+    db: require('./db'),
+    config_handler: require('./config_handler')
   };
 }
