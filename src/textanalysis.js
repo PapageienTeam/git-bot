@@ -1,16 +1,17 @@
-//var chatConnector = require('./slack-api-calls');
+var chatConnector = require('./slack-api-calls');
 const cognitiveServices = require('cognitive-services');
 
 var keywordsBored = /(langweilig|Langeweile|langweile)/i
 var keywordsShowIssues = /(!showIssues)/i
-var keywordsLifesign = /(!lifesign|zeig dich|ping git-bot)/i
+var keywordsLifesign = /(!lifesign)/i
 
 //Testing messages for specific keywords
 
 //Compare given Regex-Collections to received string
 function contains(message,keywords){
-    return (keywords.match(message));
+    return (keywords.match(message.text));
 }
+
 //Checks for "keywordsBored" in a received String
 function isBored(message){
     return (contains(message, keywordsShowIssues));
@@ -23,5 +24,22 @@ function wantsIssues(message){
 function wantsLifesign(message){
     return (contains(message, keywordslifesign));
 }
+
+/**
+* Returns wanted reation in form of an integer
+* 0 = no reaction
+* 1 = display Issues, "wanted message"
+* 2 = Ping-Command
+* 3 = display Issues, "friendly suggestion"
+**/
+function reaction(message){
+    if(wantsIssues(message)) return 1;
+    else if(wantsLifesign(message)) return 2;
+    else if (isBored(message)) return 3;
+    else return -1;
+}
+
 //Export checking for Boredom/Issue-Command/Ping-Command
 module.exports = {isBored:isBored,wantsIssues:wantsIssues,wantsLifesign:wantsLifesign}
+
+// Rem best grill ヽ༼ຈل͜ຈ༽ﾉ //

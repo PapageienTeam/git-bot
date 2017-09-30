@@ -36,6 +36,7 @@ var send = function(message){
 
 var receive = function(){
    return new Promise( function( resolve ){
+      console.log("Nachricht empfangen");
       rtm.on(RTM_EVENTS.MESSAGE, resolve);
    });
 }
