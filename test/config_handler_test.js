@@ -7,7 +7,9 @@ test("loadConfig", async () => {
     PGHOST: 'localhost',
     PGPORT: 5050,
     PGPASSWORD: 'test123',
-    PGDATABASE: 'gitbot'
+    PGDATABASE: 'gitbot',
+    GIT_ORGANISATION: 'Team',
+    SLACK_BOT_TOKEN: 'token'
   });
   await fs.writeFile('config_test.json', TestConfig);
   let _ = await config_handler.loadConfig('config_test.json');
@@ -25,6 +27,12 @@ test("loadConfig", async () => {
     throw new Error('Flamingo');
   }
   if(process.env['PGDATABASE'] !== 'gitbot') {
+    throw new Error('Flamingo');
+  }
+  if(process.env['GIT_ORGANISATION'] !== 'Team') {
+    throw new Error('Flamingo');
+  }
+  if(process.env['SLACK_BOT_TOKEN'] !== 'token') {
     throw new Error('Flamingo');
   }
 })

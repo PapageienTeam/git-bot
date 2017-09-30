@@ -9,5 +9,8 @@ async function loadConfig(FilePath) {
   }
 }
 
+function getConfigByKey(Key) {
+  return process.env[Key];
+}
 
 module.exports = {loadConfig};
