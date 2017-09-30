@@ -55,7 +55,7 @@ const db = module.exports = {
 			async function addRel(user_github_login, type) {
 				let res = await pool.query('SELECT id FROM "User" WHERE github_login = $1', [user_github_login]);
 				if (res.rows.length > 0) {
-					let id = res.rows[0][0];
+					let id = res.rows[0].id;
 					let typeId = db.rel_types.indexOf(type);
 					await pool.query('INSERT INTO user_issue_rel(user_id, issue_github_id, type) VALUES($1, $2, $3)', [id, github_id, typeId]);
 				} else {
@@ -70,14 +70,14 @@ const db = module.exports = {
 			validateString(user_slack_id, 'user_slack_id');
 			let userRes = await pool.query('SELECT github_id FROM "User" WHERE slack_id = $1', [user_slack_id]);
 			if (userRes.rows.length > 0) {
-				let user_github_id = res.rows[0][0];
+				let user_github_id = res.rows[0].github_id;
 				let res = await pool.query('SELECT status, title, url FROM "Issue" WHERE github_id = $1', [user_github_id]);
 				let issues = [];
 				for(let row of res.rows) {
-					if (row[2] === 0 /* open */) {
+					if (row.status === 0 /* open */) {
 						issues.push({
-							title: row[1],
-							url: row[2]
+							title: row.title,
+							url: row.url
 						});
 					}
 				}
