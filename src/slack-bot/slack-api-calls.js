@@ -13,7 +13,7 @@ var connect = function (connecting_channel){
    // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
    rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
       for (const c of rtmStartData.channels) {
-         if (c.is_member && c.name === "ai-issuebot") {
+         if (c.is_member && c.name === connecting_channel) {
             channel = c.id
          }
       }
@@ -39,15 +39,5 @@ var receive = function(){
       rtm.on(RTM_EVENTS.MESSAGE, resolve);
    });
 }
-
-/*
-var receive = function(){
-   return new Promise( funtion (resolve){
-      rtm.on(RTM_EVENTS.MESSAGE, (message) => {
-         console.log("Nachricht empfangen: ", message)
-         resolve(message)
-      });
-   });
-}*/
 
 module.exports = {connect: connect, send: send, receive: receive}
