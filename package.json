@@ -28,7 +28,9 @@
     "rootDir": "."
   },
   "dependencies": {
+    "@slack/client": "^3.14.0",
+    "fs-extra": "^4.0.2",
     "pg": "^7.3.0",
-    "fs-extra": "^4.0.2"
+    "bluebird": "^3.5.0"
   }
 }
