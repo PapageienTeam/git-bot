@@ -4,6 +4,6 @@
   "PGPORT":5432,
   "PGPASSWORD":"password",
   "PGDATABASE":"gitbot",
-  "GIT_ORGANISATION": "team",
+  "GIT_ORGANISATION": "TEAM",
   "SLACK_BOT_TOKEN": "token"
 }
