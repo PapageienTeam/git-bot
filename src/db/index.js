@@ -21,6 +21,8 @@ const validateEnum = (val, name, max) => {
 const db = module.exports = {
 	rel_types: ['assigned', 'created', 'mentioned', 'subscribed'],
 
+	clearAll: () => pool.query('TRUNCATE User, Issue, user_issue_rel'),
+
 	user: {
 		add: async({ github_login, slack_id }) => {
 			validateString(github_login, 'user.github_login');

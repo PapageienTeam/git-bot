@@ -5,6 +5,11 @@
 const db = require('./db');
 ```
 
+```js
+// Clear the complete database ^~^
+await db.clearAll();
+```
+
 ## Users
 ```js
 await db.user.add({
