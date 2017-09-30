@@ -17,6 +17,20 @@ test('Nachricht senden', async() => {
 
 test('Nachricht empfangen', async() => {
    const sut = require('../src/slack-bot/slack-api-calls');
+   expect.assertions(1);
+   await sut.connect("ai-issuebot");
+   await new Promise((resolve) => {
+      sut.on('receive', (data) => {
+         console.log("-------Receive---------", data);
+         expect(data).toBeTruthy();
+         resolve();
+      });
+   });
+});
+
+/*
+test('Nachricht empfangen', async() => {
+   const sut = require('../src/slack-bot/slack-api-calls');
    expect.assertions(0);
    return sut.connect("ai-issuebot").then(function(data){
       expect.assertions(0);
@@ -25,4 +39,4 @@ test('Nachricht empfangen', async() => {
       });
       return promise;
    });
-});
+});*/
