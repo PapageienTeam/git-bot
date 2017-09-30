@@ -4,7 +4,7 @@ var bluebird = require('bluebird')
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
-var bot_token = process.env.SLACK_BOT_TOKEN || 'xoxb-250269402038-63yphR6uHbdTlnktuzlLn6ub';
+var bot_token = process.env.SLACK_BOT_TOKEN;
 var rtm = new RtmClient(bot_token);
 
 var channel = 0;
