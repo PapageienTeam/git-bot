@@ -26,3 +26,7 @@ await db.issue.add({
 	creator: <str> / null
 });
 ```
+
+```js
+let arrayOfIssues = await db.issue.listBySlackUserID('BLABLA_ID');
+```
